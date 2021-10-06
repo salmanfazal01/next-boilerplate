@@ -1,11 +1,10 @@
-import React from "react";
-import { AppProps } from "next/app";
+import store from "@redux/store";
 import "@styles/global.css";
+import { AppProps } from "next/app";
+import React from "react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { Hydrate } from "react-query/hydration";
 import { Provider } from "react-redux";
-import store from "@redux/store";
-import { appWithTranslation } from "@i18n";
 
 function MyApp({ Component, pageProps }: AppProps): JSX.Element {
     const queryClient = new QueryClient();
