@@ -1,8 +1,8 @@
-import React from "react";
-
+import ThemeToggleButton from "@components/ThemeToggle";
+import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
+import React from "react";
 
 const Home: React.FC = () => {
   return (
@@ -11,6 +11,7 @@ const Home: React.FC = () => {
         <Typography variant="h4" component="h1" gutterBottom>
           Next.js v5 example
         </Typography>
+        <ThemeToggleButton />
       </Box>
     </Container>
   );
