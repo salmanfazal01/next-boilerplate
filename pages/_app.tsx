@@ -7,6 +7,7 @@ import React from "react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { Hydrate } from "react-query/hydration";
 import { Provider } from "react-redux";
+import AuthContextProvider from "src/context/authContext";
 import CustomThemeProvider from "src/context/themeContext";
 import createEmotionCache from "../src/config/createEmotionCache";
 
@@ -20,13 +21,15 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
     <QueryClientProvider client={queryClient}>
       <Hydrate state={pageProps.dehydratedState}>
         <Provider store={store}>
-          <CacheProvider value={clientSideEmotionCache}>
-            <CustomThemeProvider>
-              {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-              <CssBaseline />
-              <Component {...pageProps} />
-            </CustomThemeProvider>
-          </CacheProvider>
+          <AuthContextProvider>
+            <CacheProvider value={clientSideEmotionCache}>
+              <CustomThemeProvider>
+                {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+                <CssBaseline />
+                <Component {...pageProps} />
+              </CustomThemeProvider>
+            </CacheProvider>
+          </AuthContextProvider>
         </Provider>
       </Hydrate>
     </QueryClientProvider>

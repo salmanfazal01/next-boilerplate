@@ -4,7 +4,7 @@ import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import React from "react";
 
-const Home: React.FC = () => {
+const Home: React.FC = (props) => {
   return (
     <Container maxWidth="sm">
       <Box sx={{ my: 4 }}>
