@@ -1,19 +1,28 @@
-import ThemeToggleButton from "@components/ThemeToggle";
-import Box from "@mui/material/Box";
-import Container from "@mui/material/Container";
-import Typography from "@mui/material/Typography";
+import { Typography } from "@mui/material";
 import React from "react";
 
 const Home: React.FC = (props) => {
   return (
-    <Container maxWidth="sm">
-      <Box sx={{ my: 4 }}>
-        <Typography variant="h4" component="h1" gutterBottom>
-          Next.js v5 example
-        </Typography>
-        <ThemeToggleButton />
-      </Box>
-    </Container>
+    <div>
+      <Typography variant="h4" sx={{ fontWeight: 600, mb: 2 }}>
+        Home Page
+      </Typography>
+
+      <Typography variant="h3" sx={{ fontWeight: 500, mb: 2 }}>
+        NextJS Boilerplate by Salman Fazal
+      </Typography>
+
+      <Typography sx={{ fontSize: 26 }}>
+        1. Email password authentication
+        <br />
+        2. Google Sign in
+        <br />
+        3. Forgot passwors
+        <br />
+        4. Protected Routes
+        <br />
+      </Typography>
+    </div>
   );
 };
 

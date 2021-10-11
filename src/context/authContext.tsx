@@ -15,7 +15,7 @@ const AuthContext = createContext({
   currentUser: null,
   signInWithGoogle: () => Promise,
   login: () => Promise,
-  register: (email: string, password: string) => Promise,
+  register: () => Promise,
   logout: () => Promise,
   forgotPassword: () => Promise,
   resetPassword: () => Promise,
