@@ -5,12 +5,15 @@ import {
   CardContent,
   Container,
   Divider,
+  Grid,
   TextField,
   Typography,
 } from "@mui/material";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { useAuth } from "src/context/authContext";
+import Link from "next/link";
+import { NextSeo } from "next-seo";
 
 const Login = () => {
   const { currentUser, signInWithGoogle, login } = useAuth();
@@ -41,6 +44,8 @@ const Login = () => {
 
   return (
     <Container maxWidth="sm">
+      <NextSeo title="Login" description="" />
+
       <Typography
         variant="h4"
         sx={{ fontWeight: 600, my: 3, textAlign: "center" }}
@@ -93,9 +98,28 @@ const Login = () => {
               </Typography>
             )}
 
-            <Button fullWidth size="large">
-              Register
-            </Button>
+            <Grid
+              container
+              spacing={1}
+              justifyContent="space-between"
+              alignItems="center"
+            >
+              <Grid item>
+                <Link href="/forgot-password">
+                  <Button fullWidth size="large">
+                    Forgot Password?
+                  </Button>
+                </Link>
+              </Grid>
+
+              <Grid item>
+                <Link href="/register">
+                  <Button fullWidth size="large">
+                    Register
+                  </Button>
+                </Link>
+              </Grid>
+            </Grid>
 
             <Divider sx={{ mt: 2, mb: 3 }}>
               <Typography>OR</Typography>

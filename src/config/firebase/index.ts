@@ -3,6 +3,7 @@ import { Auth, getAuth } from "firebase/auth";
 import { getDatabase } from "firebase/database";
 import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
+import { getAnalytics } from "firebase/analytics";
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -25,6 +26,7 @@ let auth: Auth;
 let firestore: ReturnType<typeof getFirestore>;
 let storage: ReturnType<typeof getStorage>;
 let database: ReturnType<typeof getDatabase>;
+let analytics: ReturnType<typeof getAnalytics>;
 
 export const configureAuth = () => {
   auth = getAuth(firebaseApp);
@@ -50,4 +52,11 @@ export const useStorage = () => {
     storage = getStorage();
   }
   return storage;
+};
+
+export const useAnalytics = () => {
+  if (!analytics) {
+    analytics = getAnalytics();
+  }
+  return analytics;
 };
