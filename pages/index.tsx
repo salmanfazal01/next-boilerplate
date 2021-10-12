@@ -1,6 +1,8 @@
 import { Typography } from "@mui/material";
 import { NextSeo } from "next-seo";
 import React from "react";
+import { useTranslation } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 const checklists = [
   "Material UI v5 ✅",
@@ -8,25 +10,27 @@ const checklists = [
   "Firebase v9 ✅",
   "Email Password Authentication ✅",
   "Google Authentication ✅",
-  "Reset Password ✅",
+  "Forgot Password ✅",
   "Firestore Example",
   "Cloud functions",
   "Google Analytics ✅",
   "Redux/context ✅",
   "Localizations (react-i18next)",
-  "Next-seo",
+  "Next-seo ✅",
   "Hook-form/redux-form",
   "Landing Page Layout ✅",
   "Dashboard Layout",
 ];
 
 const Home: React.FC = (props) => {
+  const { t } = useTranslation("common");
+
   return (
     <div>
       <NextSeo title="NextJS Boilerplate" description="" />
 
       <Typography variant="h4" sx={{ fontWeight: 600, mb: 2 }}>
-        Home Page
+        {t("home_page")}
       </Typography>
 
       <Typography variant="h3" sx={{ fontWeight: 500, mb: 2 }}>
@@ -41,5 +45,11 @@ const Home: React.FC = (props) => {
     </div>
   );
 };
+
+export const getStaticProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale, ["common"])),
+  },
+});
 
 export default Home;

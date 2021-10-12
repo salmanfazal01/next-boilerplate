@@ -1,16 +1,34 @@
 import ThemeToggleButton from "@components/ThemeToggle";
-import { AppBar, Button, Container, Toolbar, Typography } from "@mui/material";
+import TranslateIcon from "@mui/icons-material/Translate";
+import {
+  AppBar,
+  Button,
+  Container,
+  IconButton,
+  Menu,
+  MenuItem,
+  Toolbar,
+  Typography,
+} from "@mui/material";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useState } from "react";
+import { LANGUAGES } from "src/constants";
 import { useAuth } from "src/context/authContext";
 
 const LandingNavbar = () => {
+  const [langAnchor, setLangAnchor] = useState(null);
   const { currentUser, logout } = useAuth();
   const router = useRouter();
-  const { route } = router;
+  const { route, pathname } = router;
 
   const isLoggedIn = !!currentUser?.accessToken;
+
+  const handleLanguageChange = (lang) => {
+    router.replace(pathname, pathname, { locale: lang });
+    // i18n.changeLanguage(lang);
+    setLangAnchor(null);
+  };
 
   return (
     <div>
@@ -56,6 +74,38 @@ const LandingNavbar = () => {
             )}
 
             <ThemeToggleButton />
+
+            <IconButton
+              size="large"
+              onClick={(e) => setLangAnchor(e.currentTarget)}
+              color="inherit"
+            >
+              <TranslateIcon />
+            </IconButton>
+
+            <Menu
+              anchorEl={langAnchor}
+              anchorOrigin={{
+                vertical: "bottom",
+                horizontal: "right",
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              open={Boolean(langAnchor)}
+              onClose={() => setLangAnchor(null)}
+            >
+              {LANGUAGES.map((item) => (
+                <MenuItem
+                  onClick={() => handleLanguageChange(item.code)}
+                  key={item.code}
+                >
+                  {item.name}
+                </MenuItem>
+              ))}
+            </Menu>
           </Toolbar>
         </Container>
       </AppBar>

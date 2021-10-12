@@ -8,6 +8,8 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import { useTranslation } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { useAuth } from "src/context/authContext";
@@ -18,6 +20,7 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const { t } = useTranslation("common");
 
   const handleRegister = (e) => {
     e?.preventDefault?.();
@@ -45,7 +48,7 @@ const Register = () => {
         variant="h4"
         sx={{ fontWeight: 600, my: 3, textAlign: "center" }}
       >
-        Register
+        {t("register_page")}
       </Typography>
 
       <Card variant="outlined">
@@ -116,5 +119,11 @@ const Register = () => {
     </Container>
   );
 };
+
+export const getStaticProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale, ["common"])),
+  },
+});
 
 export default Register;

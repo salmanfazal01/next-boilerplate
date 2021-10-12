@@ -1,10 +1,13 @@
 {
-    "hello": "Hello",
-    "greet": "Hello, {{name}}!",
-    "world": "World",
-    "documentation": "Go To Documentation",
-    "language": {
-        "tr": "🇹🇷 Türkçe",
-        "en": "🇺🇸 English"
-    }
+  "hello": "Hello",
+  "greet": "Hello, {{name}}!",
+  "world": "World",
+  "home_page": "Home Page EN",
+  "login_page": "Login Page EN",
+  "register_page": "Register Page EN",
+  "documentation": "Go To Documentation",
+  "language": {
+    "tr": "🇹🇷 Türkçe",
+    "en": "🇺🇸 English"
+  }
 }

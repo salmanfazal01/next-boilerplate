@@ -7,13 +7,15 @@ import {
   Divider,
   Grid,
   TextField,
-  Typography,
+  Typography
 } from "@mui/material";
-import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
-import { useAuth } from "src/context/authContext";
-import Link from "next/link";
+import { useTranslation } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { NextSeo } from "next-seo";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import React, { useState } from "react";
+import { useAuth } from "src/context/authContext";
 
 const Login = () => {
   const { currentUser, signInWithGoogle, login } = useAuth();
@@ -21,6 +23,7 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const { t } = useTranslation("common");
 
   const handleSignIn = (e) => {
     e?.preventDefault?.();
@@ -50,7 +53,7 @@ const Login = () => {
         variant="h4"
         sx={{ fontWeight: 600, my: 3, textAlign: "center" }}
       >
-        Login
+        {t("login_page")}
       </Typography>
 
       <Card variant="outlined">
@@ -140,5 +143,11 @@ const Login = () => {
     </Container>
   );
 };
+
+export const getStaticProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale, ["common"])),
+  },
+});
 
 export default Login;

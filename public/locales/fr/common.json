@@ -1,0 +1,13 @@
+{
+  "hello": "Merhaba",
+  "greet": "Merhaba, {{name}}!",
+  "home_page": "Home Page FR",
+  "login_page": "Login Page FR",
+  "register_page": "Register Page FR",
+  "world": "Dünya",
+  "documentation": "Dökümantasyona Git",
+  "language": {
+    "tr": "🇹🇷 Türkçe",
+    "en": "🇺🇸 English"
+  }
+}
