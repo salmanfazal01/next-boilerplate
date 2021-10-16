@@ -1,4 +1,3 @@
-import GoogleIcon from "@mui/icons-material/Google";
 import {
   Button,
   Card,
@@ -8,14 +7,13 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
-import { useAuth } from "src/context/authContext";
 import Link from "next/link";
+import React, { useState } from "react";
+import { useAuth } from "src/context/authContext";
+import { withPublic } from "src/hoc/routes";
 
 const ForgotPassword = () => {
-  const { currentUser, forgotPassword } = useAuth();
-  const router = useRouter();
+  const { forgotPassword } = useAuth();
   const [email, setEmail] = useState("");
   const [success, setSuccess] = useState("");
   const [error, setError] = useState("");
@@ -36,10 +34,6 @@ const ForgotPassword = () => {
       }
     }
   };
-
-  if (currentUser?.accessToken) {
-    router.push("/");
-  }
 
   return (
     <Container maxWidth="sm">
@@ -105,4 +99,4 @@ const ForgotPassword = () => {
   );
 };
 
-export default ForgotPassword;
+export default withPublic(ForgotPassword);

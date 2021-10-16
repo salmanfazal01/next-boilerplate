@@ -16,9 +16,10 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { useAuth } from "src/context/authContext";
+import { withPublic } from "src/hoc/routes";
 
 const Login = () => {
-  const { currentUser, signInWithGoogle, login } = useAuth();
+  const { signInWithGoogle, login } = useAuth();
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -40,10 +41,6 @@ const Login = () => {
         });
     }
   };
-
-  if (currentUser?.accessToken) {
-    router.push("/");
-  }
 
   return (
     <Container maxWidth="sm">
@@ -150,4 +147,4 @@ export const getStaticProps = async ({ locale }) => ({
   },
 });
 
-export default Login;
+export default withPublic(Login);

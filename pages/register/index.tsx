@@ -13,9 +13,10 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { useAuth } from "src/context/authContext";
+import { withPublic } from "src/hoc/routes";
 
 const Register = () => {
-  const { currentUser, signInWithGoogle, register } = useAuth();
+  const { signInWithGoogle, register } = useAuth();
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -37,10 +38,6 @@ const Register = () => {
         });
     }
   };
-
-  if (currentUser?.accessToken) {
-    router.push("/");
-  }
 
   return (
     <Container maxWidth="sm">
@@ -126,4 +123,4 @@ export const getStaticProps = async ({ locale }) => ({
   },
 });
 
-export default Register;
+export default withPublic(Register);

@@ -15,7 +15,7 @@ const checklists = [
   "Cloud functions",
   "Google Analytics ✅",
   "Redux/context ✅",
-  "Localizations (react-i18next)",
+  "Localizations (next-i18next) ✅",
   "Next-seo ✅",
   "Hook-form/redux-form",
   "Landing Page Layout ✅",
