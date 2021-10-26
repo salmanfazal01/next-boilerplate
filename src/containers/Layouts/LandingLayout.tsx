@@ -1,6 +1,6 @@
 import { Container } from "@mui/material";
 import React from "react";
-import LandingNavbar from "src/components/Navbar/LandingNavbar";
+import LandingNavbar from "@components/navbars/LandingNavbar/LandingNavbar";
 
 const LandingLayout = (props: any) => {
   return (

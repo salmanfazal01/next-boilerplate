@@ -12,7 +12,7 @@ const checklists = [
   "Google Authentication ✅",
   "Forgot Password ✅",
   "Firestore Example",
-  "Cloud functions",
+  "Cloud functions ✅",
   "Google Analytics ✅",
   "Redux/context ✅",
   "Localizations (next-i18next) ✅",

@@ -9,11 +9,19 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { Hydrate } from "react-query/hydration";
 import { Provider } from "react-redux";
 import createEmotionCache from "src/config/createEmotionCache";
-import { useAnalytics } from "src/config/firebase";
+import { useAnalytics } from "src/hooks/firebase";
 import LandingLayout from "src/containers/Layouts/LandingLayout";
 import AuthContextProvider from "src/context/authContext";
 import CustomThemeProvider from "src/context/themeContext";
 import "../src/styles/global.css";
+import { useRouter } from "next/router";
+import DashboardLayout from "src/containers/Layouts/DashboardLayout";
+import { CommonContextProvider } from "src/context/commonContext";
+import { StylesProvider, createGenerateClassName } from "@mui/styles";
+
+const generateClassName = createGenerateClassName({
+  productionPrefix: "c",
+});
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
@@ -21,7 +29,12 @@ const clientSideEmotionCache = createEmotionCache();
 function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   const queryClient = new QueryClient();
 
-  const Layout = LandingLayout;
+  const router = useRouter();
+  const { pathname } = router;
+
+  const Layout = pathname?.includes("dashboard")
+    ? DashboardLayout
+    : LandingLayout;
 
   useEffect(() => {
     useAnalytics();
@@ -31,17 +44,21 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
     <QueryClientProvider client={queryClient}>
       <Hydrate state={pageProps.dehydratedState}>
         <Provider store={store}>
-          <AuthContextProvider>
-            <CacheProvider value={clientSideEmotionCache}>
-              <CustomThemeProvider>
-                {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-                <CssBaseline />
-                <Layout>
-                  <Component {...pageProps} />
-                </Layout>
-              </CustomThemeProvider>
-            </CacheProvider>
-          </AuthContextProvider>
+          <StylesProvider generateClassName={generateClassName}>
+            <CommonContextProvider>
+              <AuthContextProvider>
+                <CacheProvider value={clientSideEmotionCache}>
+                  <CustomThemeProvider>
+                    {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+                    <CssBaseline />
+                    <Layout>
+                      <Component {...pageProps} />
+                    </Layout>
+                  </CustomThemeProvider>
+                </CacheProvider>
+              </AuthContextProvider>
+            </CommonContextProvider>
+          </StylesProvider>
         </Provider>
       </Hydrate>
     </QueryClientProvider>

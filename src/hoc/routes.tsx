@@ -4,12 +4,15 @@ import { useAuth } from "src/context/authContext";
 
 export function withPublic(Component) {
   return function WithPublic(props) {
-    const { currentUser } = useAuth();
+    const { currentUser, loading } = useAuth();
     const router = useRouter();
 
-    if (currentUser) {
-      typeof window !== "undefined" && router.replace("/");
+    if (loading) {
       return <h1>Loading...</h1>;
+    }
+
+    if (currentUser?.accessToken) {
+      typeof window !== "undefined" && router.replace("/dashboard");
     }
     return <Component auth={currentUser} {...props} />;
   };
@@ -17,10 +20,14 @@ export function withPublic(Component) {
 
 export function withProtected(Component) {
   return function WithProtected(props) {
-    const { currentUser } = useAuth();
+    const { currentUser, loading } = useAuth();
     const router = useRouter();
 
-    if (!currentUser) {
+    if (loading) {
+      return <h1>Loading...</h1>;
+    }
+
+    if (!currentUser?.accessToken) {
       typeof window !== "undefined" && router.replace("/login");
       return <h1>Loading...</h1>;
     }
