@@ -70,9 +70,9 @@ export default functions.auth.user().onCreate(async (userRecord) => {
     }
   });
 
-  // User ---FIX
+  // User
   const userTransaction = await db.runTransaction(async (t) => {
-    const ref = db.collection("users_count").doc();
+    const ref = db.doc("users_count/counter");
     const doc = await t.get(ref);
 
     // User counter

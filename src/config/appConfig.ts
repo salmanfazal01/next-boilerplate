@@ -18,7 +18,7 @@ export default {
         icon: DashboardIcon,
       },
       {
-        link: "/dashboard/contacts",
+        link: "/contacts",
         grants: ["administrator"],
         text: "contacts",
         icon: PeopleIcon,

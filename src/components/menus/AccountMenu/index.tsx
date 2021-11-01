@@ -26,8 +26,6 @@ const AccountMenu = () => {
 
   const { currentUser = {}, userProfile = {}, logout } = useAuth();
 
-  console.log(currentUser);
-
   return (
     <>
       <Avatar

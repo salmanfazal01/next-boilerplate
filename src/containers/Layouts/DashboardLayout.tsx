@@ -14,6 +14,7 @@ const useStyles = (theme: Theme) =>
       padding: theme.spacing(2, 3),
       marginTop: APPBAR_DESKTOP,
       [theme.breakpoints.up("lg")]: {
+        padding: theme.spacing(2, 7),
         width: ({ drawerMenuOpen }) =>
           drawerMenuOpen ? `calc(100% - ${DRAWER_WIDTH}px)` : "100%",
         marginLeft: ({ drawerMenuOpen }) => (drawerMenuOpen ? DRAWER_WIDTH : 0),

@@ -7,12 +7,12 @@ import {
   Box,
   IconButton,
   Stack,
+  Theme,
   Toolbar,
   useTheme,
 } from "@mui/material";
-import { alpha } from "@mui/material/styles";
 import { makeStyles } from "@mui/styles";
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { APPBAR_DESKTOP, APPBAR_MOBILE, DRAWER_WIDTH } from "src/constants";
 import { CommonContext } from "src/context/commonContext";
 
@@ -20,10 +20,7 @@ import { CommonContext } from "src/context/commonContext";
 const useStyles = (theme: Theme) =>
   makeStyles({
     root: {
-      boxShadow: "none",
-      backdropFilter: "blur(6px)",
-      WebkitBackdropFilter: "blur(6px)", // Fix on Mobile
-      // backgroundColor: alpha(theme.palette.background.default, 0.72),
+      borderBottom: "1px",
       [theme.breakpoints.up("lg")]: {
         width: ({ drawerMenuOpen }) =>
           drawerMenuOpen ? `calc(100% - ${DRAWER_WIDTH}px)` : "100%",
@@ -32,9 +29,10 @@ const useStyles = (theme: Theme) =>
 
     toolbar: {
       minHeight: APPBAR_MOBILE,
+      padding: theme.spacing(0, 3),
       [theme.breakpoints.up("lg")]: {
         minHeight: APPBAR_DESKTOP,
-        padding: theme.spacing(0, 3),
+        padding: theme.spacing(0, 7),
       },
     },
   });
@@ -52,7 +50,7 @@ const DashboardNavbar = () => {
   };
 
   return (
-    <AppBar className={classes.root}>
+    <AppBar className={classes.root} color="transparent" elevation={0}>
       <Toolbar className={classes.toolbar}>
         <IconButton onClick={handleDrawerToggle} sx={{ mr: 1 }}>
           <MenuIcon />

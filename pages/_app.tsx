@@ -10,12 +10,12 @@ import { Hydrate } from "react-query/hydration";
 import { Provider } from "react-redux";
 import createEmotionCache from "src/config/createEmotionCache";
 import { useAnalytics } from "src/hooks/firebase";
-import LandingLayout from "src/containers/Layouts/LandingLayout";
+import LandingLayout from "src/containers/layouts/LandingLayout";
 import AuthContextProvider from "src/context/authContext";
 import CustomThemeProvider from "src/context/themeContext";
 import "../src/styles/global.css";
 import { useRouter } from "next/router";
-import DashboardLayout from "src/containers/Layouts/DashboardLayout";
+import DashboardLayout from "src/containers/layouts/DashboardLayout";
 import { CommonContextProvider } from "src/context/commonContext";
 import { StylesProvider, createGenerateClassName } from "@mui/styles";
 
@@ -32,9 +32,11 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   const router = useRouter();
   const { pathname } = router;
 
-  const Layout = pathname?.includes("dashboard")
-    ? DashboardLayout
-    : LandingLayout;
+  const landingLayouts = ["/", "/login", "/register"];
+
+  const Layout = landingLayouts.includes(pathname)
+    ? LandingLayout
+    : DashboardLayout;
 
   useEffect(() => {
     useAnalytics();

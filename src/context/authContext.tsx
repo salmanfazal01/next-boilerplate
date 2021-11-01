@@ -15,7 +15,8 @@ import { collection, getDocs, limit, query, where } from "@firebase/firestore";
 import { NormalizeMulti } from "react-i18next";
 
 const AuthContext = createContext({
-  loading: null,
+  authLoading: null,
+  profileLoading: null,
   userProfile: null,
   currentUser: null,
   signInWithGoogle: () => Promise,
@@ -34,12 +35,15 @@ export const useAuth = () => useContext(AuthContext);
 export default function AuthContextProvider(props: any) {
   const [currentUser, setCurrentUser] = useState(null);
   const [userProfile, setUserProfile] = useState(null);
-  const [loading, setLoading] = useState<Boolean>(true);
+  const [authLoading, setAuthLoading] = useState<Boolean>(true);
+  const [profileLoading, setProfileLoading] = useState<Boolean>(true);
+  const [reload, setReload] = useState(0);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user: any) => {
       setCurrentUser(user ? user : null);
-      setLoading(false);
+      setAuthLoading(false);
+      setProfileLoading(!!user);
     });
     return () => {
       unsubscribe();
@@ -47,11 +51,30 @@ export default function AuthContextProvider(props: any) {
   }, []);
 
   useEffect(() => {
-    console.log("The user is", currentUser);
     if (currentUser && !userProfile) {
-      getContact().then(setUserProfile);
+      getContact()
+        .then(setUserProfile)
+        .then(() => setReload(reload + 1));
     }
   }, [currentUser]);
+
+  useEffect(() => {
+    if (currentUser && !userProfile?.id) {
+      setTimeout(() => {
+        getContact()
+          .then(setUserProfile)
+          .then(() => setReload(reload + 1));
+      }, [2000]);
+    } else if (userProfile?.id) {
+      setProfileLoading(false);
+    }
+  }, [reload]);
+
+  useEffect(() => {
+    if (profileLoading && !authLoading && currentUser?.uid) {
+      setReload(reload + 1);
+    }
+  }, [profileLoading, authLoading]);
 
   async function getContact() {
     const q = query(
@@ -61,7 +84,8 @@ export default function AuthContextProvider(props: any) {
     );
 
     const snap = await getDocs(q);
-    return snap?.docs?.[0].data();
+
+    return snap?.docs?.[0]?.data?.();
   }
 
   function login(email: string, password: string) {
@@ -92,7 +116,8 @@ export default function AuthContextProvider(props: any) {
   }
 
   const value = {
-    loading,
+    authLoading,
+    profileLoading,
     userProfile,
     currentUser,
     signInWithGoogle,

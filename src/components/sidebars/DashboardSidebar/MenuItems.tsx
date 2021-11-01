@@ -127,7 +127,13 @@ const MenuItems = ({ items = [] }) => {
                     )}
                   </>
                 }
-                onClick={(e) => item.nestedItems && handleCollapse(e, i)}
+                onClick={(e) =>
+                  item.nestedItems
+                    ? handleCollapse(e, i)
+                    : item.link &&
+                      pathname !== item.link &&
+                      router.push(item.link)
+                }
               >
                 <ListItemIcon className={classes.listItemIconContainer}>
                   <item.icon
